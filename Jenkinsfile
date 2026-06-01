@@ -1,5 +1,4 @@
 pipeline {
-
     agent any
 
     environment {
@@ -10,25 +9,25 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/tejasvijain09/docker-jenkins-lab.git'
+                git branch: 'main',
+                    url: 'https://github.com/tejasvijain09/docker-jenkins-lab.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t %IMAGE_NAME% .'
+                sh "docker build -t ${IMAGE_NAME} ."
             }
         }
 
         stage('Show Docker Images') {
             steps {
-                bat 'docker images'
+                sh "docker images"
             }
         }
     }
 
     post {
-
         success {
             echo 'Docker image built successfully'
         }
